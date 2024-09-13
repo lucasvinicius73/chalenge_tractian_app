@@ -1,10 +1,10 @@
 import 'package:chalenge_tractian_app/shared/models/node_model.dart';
 
 class AssetModel extends NodeModel {
-  final String sensorId;
-  final String sensorType;
-  final String status;
-  final String gatewayId;
+  final String? sensorId;
+  final String? sensorType;
+  final String? status;
+  final String? gatewayId;
 
   AssetModel({
     required super.id,
