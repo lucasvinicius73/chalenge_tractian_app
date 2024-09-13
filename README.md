@@ -1,16 +1,7 @@
-# chalenge_tractian_app
+# Challenge Tractian Mobile
+Challenge proposed by Tractian for the position of Mobile Software Engineer. The challenge consists of creating a Flutter application for managing and visualizing a company's assets.
 
-A new Flutter project.
+[Challenge Link](https://github.com/tractian/challenges/blob/main/mobile/README.md)
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## API consumed:
+- API: [fake-api.tractian.com](fake-api.tractian.com)

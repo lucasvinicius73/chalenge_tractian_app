@@ -1,4 +1,4 @@
-import 'package:chalenge_tractian_app/shared/main.dart';
+import 'package:chalenge_tractian_app/app_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
