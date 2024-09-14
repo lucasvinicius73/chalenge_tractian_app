@@ -4,12 +4,14 @@ import 'package:chalenge_tractian_app/shared/models/node_model.dart';
 import 'package:chalenge_tractian_app/shared/repository/http_api_repository.dart';
 import 'package:chalenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
+import 'package:string_similarity/string_similarity.dart';
 
 class AssetController extends ChangeNotifier {
   HttpApiRepository repository = HttpApiRepository();
 
   List<LocationModel> locations = [];
   List<AssetModel> assets = [];
+  List<NodeModel> path = [];
 
   StateModel _stateLocation = StateModel();
   StateModel _stateAsset = StateModel();
@@ -25,24 +27,10 @@ class AssetController extends ChangeNotifier {
     await getLocations(companieId);
     buildTree();
     notifyListeners();
-
-    // notifyListeners();
-
-    // try {
-    //   if (getLocationState() is Complete && getAssetState() is Complete) {
-
-    //     buildTree();
-    //   }
-    // } catch (e) {
-
-    // }
-    notifyListeners();
   }
 
   getLocations(String companieId) async {
-    //setLocationState(Loading());
     locations = await repository.getLocations(companieId);
-
     notifyListeners();
   }
 
@@ -75,7 +63,86 @@ class AssetController extends ChangeNotifier {
     }
   }
 
-  
+  searchNodeForName(String name) {
+    if (root.children.isNotEmpty) {
+      path.add(root);
+    }
+  }
+
+  NodeModel? searchAndBuildTree(NodeModel node, String searchTerm) {
+    double levelSimilarity = 0.2;
+
+    double similarity =
+        node.name.toLowerCase().similarityTo(searchTerm.toLowerCase());
+
+    List<NodeModel> childrenFound = [];
+
+    for (var child in node.children) {
+      NodeModel? newNode = searchAndBuildTree(child, searchTerm);
+      if (newNode != null) {
+        childrenFound.add(newNode);
+      }
+    }
+
+    if (similarity >= levelSimilarity || childrenFound.isNotEmpty) {
+      NodeModel newNode = node is LocationModel
+          ? LocationModel(
+              id: node.id,
+              name: node.name,
+              parentId: node.parentId,
+              locationId: node.locationId)
+          : node is AssetModel
+              ? AssetModel(
+                  id: node.id,
+                  name: node.name,
+                  parentId: node.parentId,
+                  locationId: node.locationId,
+                  sensorId: node.sensorId,
+                  sensorType: node.sensorType,
+                  status: node.status,
+                  gatewayId: node.gatewayId)
+              : NodeModel(id: node.id, name: node.name);
+      newNode.children = childrenFound;
+      return newNode;
+    }
+    return null;
+  }
+
+  NodeModel? filterAndBuildTree(NodeModel node, String filterTerm) {
+    bool match = node is AssetModel ? node.status == filterTerm : false;
+
+    List<NodeModel> childrenFound = [];
+
+    for (var child in node.children) {
+      NodeModel? newNode = filterAndBuildTree(child, filterTerm);
+      if (newNode != null) {
+        childrenFound.add(newNode);
+      }
+    }
+
+    if (match || childrenFound.isNotEmpty) {
+      NodeModel newNode = node is LocationModel
+          ? LocationModel(
+              id: node.id,
+              name: node.name,
+              parentId: node.parentId,
+              locationId: node.locationId)
+          : node is AssetModel
+              ? AssetModel(
+                  id: node.id,
+                  name: node.name,
+                  parentId: node.parentId,
+                  locationId: node.locationId,
+                  sensorId: node.sensorId,
+                  sensorType: node.sensorType,
+                  status: node.status,
+                  gatewayId: node.gatewayId)
+              : NodeModel(id: node.id, name: node.name);
+      newNode.children = childrenFound;
+      return newNode;
+    }
+    return null;
+  }
 
   getAssetState() {
     return _stateAsset;
