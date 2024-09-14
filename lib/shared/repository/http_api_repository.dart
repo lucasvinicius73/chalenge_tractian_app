@@ -10,10 +10,12 @@ class HttpApiRepository implements Repository {
   @override
   Future<List<AssetModel>> getAssets(String companieId) async {
     List<AssetModel> assets = [];
-    var url = Uri.parse("https://fake-api.tractian.com/companies/$companieId/assets");
+    var url =
+        Uri.parse("https://fake-api.tractian.com/companies/$companieId/assets");
     var response = await http.get(url);
     var decodeResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List;
     assets = decodeResponse.map((json) => AssetModel.fromJson(json)).toList();
+
     return assets;
   }
 
@@ -31,7 +33,8 @@ class HttpApiRepository implements Repository {
   @override
   Future<List<LocationModel>> getLocations(String companieId) async {
     List<LocationModel> locations = [];
-    var url = Uri.parse("https://fake-api.tractian.com/companies/$companieId/locations");
+    var url = Uri.parse(
+        "https://fake-api.tractian.com/companies/$companieId/locations");
     var response = await http.get(url);
     var decodeResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List;
     locations =

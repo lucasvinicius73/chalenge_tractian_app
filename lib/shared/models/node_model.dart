@@ -3,18 +3,12 @@ class NodeModel {
   final String name;
   final String? parentId;
   final String? locationId;
+  List<NodeModel> children = [];
 
   NodeModel(
-      {required this.id,
-      required this.name,
-      required this.parentId,
-      required this.locationId});
+      {required this.id, required this.name, this.parentId, this.locationId});
 
-  factory NodeModel.fromJson(Map json) {
-    return NodeModel(
-        id: json["id"],
-        name: json["name"],
-        parentId: json["parentId"],
-        locationId: json["locationId"]);
+  void addChild(NodeModel child) {
+    children.add(child);
   }
 }
