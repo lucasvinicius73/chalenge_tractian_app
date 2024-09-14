@@ -1,3 +1,4 @@
+import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
 import 'package:chalenge_tractian_app/shared/models/node_model.dart';
 import 'package:chalenge_tractian_app/src/Asset/asset_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,7 +23,11 @@ void main() async {
 
 // Função auxiliar para exibir a árvore
 void printTree(NodeModel node, [int depth = 0]) {
-  print('${'  ' * depth}${node.name}');
+  if (node is AssetModel && node.status != null) {
+    print('${'  ' * depth}${node.name}  Status: ${node.status}');
+  } else {
+    print('${'  ' * depth}${node.name}');
+  }
   for (var child in node.children) {
     printTree(child, depth + 1);
   }

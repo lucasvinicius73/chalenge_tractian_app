@@ -85,23 +85,7 @@ class AssetController extends ChangeNotifier {
     }
 
     if (similarity >= levelSimilarity || childrenFound.isNotEmpty) {
-      NodeModel newNode = node is LocationModel
-          ? LocationModel(
-              id: node.id,
-              name: node.name,
-              parentId: node.parentId,
-              locationId: node.locationId)
-          : node is AssetModel
-              ? AssetModel(
-                  id: node.id,
-                  name: node.name,
-                  parentId: node.parentId,
-                  locationId: node.locationId,
-                  sensorId: node.sensorId,
-                  sensorType: node.sensorType,
-                  status: node.status,
-                  gatewayId: node.gatewayId)
-              : NodeModel(id: node.id, name: node.name);
+      NodeModel newNode = NodeModel.createNewNode(node);
       newNode.children = childrenFound;
       return newNode;
     }
@@ -121,23 +105,8 @@ class AssetController extends ChangeNotifier {
     }
 
     if (match || childrenFound.isNotEmpty) {
-      NodeModel newNode = node is LocationModel
-          ? LocationModel(
-              id: node.id,
-              name: node.name,
-              parentId: node.parentId,
-              locationId: node.locationId)
-          : node is AssetModel
-              ? AssetModel(
-                  id: node.id,
-                  name: node.name,
-                  parentId: node.parentId,
-                  locationId: node.locationId,
-                  sensorId: node.sensorId,
-                  sensorType: node.sensorType,
-                  status: node.status,
-                  gatewayId: node.gatewayId)
-              : NodeModel(id: node.id, name: node.name);
+      NodeModel newNode = NodeModel.createNewNode(node);
+
       newNode.children = childrenFound;
       return newNode;
     }
