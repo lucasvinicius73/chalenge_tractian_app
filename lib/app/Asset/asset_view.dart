@@ -35,7 +35,9 @@ class _AssetViewState extends State<AssetView> {
             Widget list = Container();
             switch (state) {
               case Loading _:
-                list = buildLoadind();
+                list = buildLoading();
+              case Error _:
+                list = buildErrorWarning(state);
               default:
                 list = buildTree();
             }
@@ -54,6 +56,7 @@ class _AssetViewState extends State<AssetView> {
   Widget buildTree() {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
+      childCount: controller.mapNodes.length,
         (context, index) {
           final node = controller.mapNodes.keys.toList()[index];
           int depth = controller.mapNodes[node]!;
@@ -71,7 +74,19 @@ class _AssetViewState extends State<AssetView> {
     );
   }
 
-  Widget buildLoadind() {
-    return Center();
+  Widget buildLoading() {
+    return const SliverToBoxAdapter(
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+
+  Widget buildErrorWarning(Error error) {
+    return SliverToBoxAdapter(
+      child: Center(
+        child: Text("Não foi possivel carregar as empresas: \n$error"),
+      ),
+    );
   }
 }

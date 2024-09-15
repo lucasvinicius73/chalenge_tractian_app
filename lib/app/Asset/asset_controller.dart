@@ -23,11 +23,18 @@ class AssetController extends ChangeNotifier {
   );
 
   fetchAll(String companieId) async {
+    setBuildTreeState(Loading());
     mapNodes.clear();
-    await getAssets(companieId);
-    await getLocations(companieId);
-    await buildTree();
-    await printTree(root);
+    try {
+      await getAssets(companieId);
+      await getLocations(companieId);
+      await buildTree();
+      await printTree(root);
+      setBuildTreeState(Complete());
+    } catch (e) {
+      setBuildTreeState(Error(error: "$e"));
+    }
+
     notifyListeners();
   }
 
