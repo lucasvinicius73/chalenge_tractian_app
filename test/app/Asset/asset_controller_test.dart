@@ -8,16 +8,12 @@ void main() async {
 
   await controller.fetchAll("662fd0ee639069143a8fc387");
 
-  // NodeModel? searchNode =
-  //     controller.searchAndBuildTree(controller.root, "Motor");
-  // NodeModel? filteredRoot =
-  //     controller.filterAndBuildTree(controller.root, "alert");
-
-  controller.printTree(controller.root);
+  //await controller.fetchSearch("Motor");
+  await controller.fetchFilter("alert");
 
   for (var node in controller.mapNodes.keys) {
     int depth = controller.mapNodes[node]!;
-    print("${"  "*depth}${node.name}");
+    print("${"  " * depth}${node.name}");
   }
 }
 

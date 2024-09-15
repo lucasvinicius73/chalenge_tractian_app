@@ -66,7 +66,7 @@ class _NodeWidgetState extends State<NodeWidget> {
                 )
               : const SizedBox(),
           SizedBox(
-            width: 200,
+            width: 150,
             child: Text(
               node.name,
               overflow: TextOverflow.ellipsis,

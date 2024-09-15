@@ -12,12 +12,13 @@ class AssetController extends ChangeNotifier {
   List<LocationModel> locations = [];
   List<AssetModel> assets = [];
   List<NodeModel> path = [];
+  Map<NodeModel, int> mapNodes = {};
 
-  StateModel _stateLocation = StateModel();
-  StateModel _stateAsset = StateModel();
   StateModel _stateBuildTree = StateModel();
 
   bool showFab = false;
+  bool critic = false;
+  bool operating = false;
 
   NodeModel root = NodeModel(
     id: "id",
@@ -37,6 +38,32 @@ class AssetController extends ChangeNotifier {
       setBuildTreeState(Error(error: "$e"));
     }
 
+    notifyListeners();
+  }
+
+  fetchSearch(String stringSearch) async {
+    setBuildTreeState(Loading());
+    mapNodes.clear();
+    try {
+      NodeModel? searchNode = searchAndBuildTree(root, stringSearch);
+      await printTree(searchNode!);
+      setBuildTreeState(Complete());
+    } catch (e) {
+      setBuildTreeState(Error(error: "$e"));
+    }
+    notifyListeners();
+  }
+
+  fetchFilter(String stringFilter) async {
+    setBuildTreeState(Loading());
+    mapNodes.clear();
+    try {
+      NodeModel? searchNode = filterAndBuildTree(root, stringFilter);
+      await printTree(searchNode!);
+      setBuildTreeState(Complete());
+    } catch (e) {
+      setBuildTreeState(Error(error: "$e"));
+    }
     notifyListeners();
   }
 
@@ -71,12 +98,6 @@ class AssetController extends ChangeNotifier {
       } else {
         nodeMap[parentId]!.addChild(node);
       }
-    }
-  }
-
-  searchNodeForName(String name) {
-    if (root.children.isNotEmpty) {
-      path.add(root);
     }
   }
 
@@ -124,8 +145,6 @@ class AssetController extends ChangeNotifier {
     return null;
   }
 
-  Map<NodeModel, int> mapNodes = {};
-
   printTree(NodeModel node, [int depth = 0]) {
     mapNodes[node] = depth;
     for (var child in node.children) {
@@ -140,24 +159,48 @@ class AssetController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getAssetState() {
-    return _stateAsset;
+  disposerTreeView() {
+    mapNodes.clear();
+    notifyListeners();
   }
 
-  getLocationState() {
-    return _stateLocation;
+  changeFilterState(String status) {
+    if (status == "operating") {
+      operating = !operating;
+      print("Status Operating : $operating");
+      if (operating == true) {
+        critic = false;
+        fetchFilter(status);
+      } else {
+        disposeSearch();
+      }
+      notifyListeners();
+    } else if (status == "alert") {
+      critic = !critic;
+      print("Status Critic: $critic");
+
+      if (critic == true) {
+        operating = false;
+        fetchFilter(status);
+      } else {
+        disposeSearch();
+      }
+      notifyListeners();
+    }
+  }
+
+  disposeSearch() {
+    setBuildTreeState(Loading());
+    critic = false;
+    operating = false;
+    mapNodes.clear();
+    printTree(root);
+    setBuildTreeState(Complete());
+    notifyListeners();
   }
 
   getBuildTreeState() {
     return _stateBuildTree;
-  }
-
-  setAssetState(StateModel newState) {
-    _stateAsset = newState;
-  }
-
-  setLocationState(StateModel newState) {
-    _stateLocation = newState;
   }
 
   setBuildTreeState(StateModel newState) {
