@@ -1,4 +1,4 @@
-import 'package:chalenge_tractian_app/shared/models/compane_model.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:flutter/material.dart';
 
 class MenuButton extends StatelessWidget {

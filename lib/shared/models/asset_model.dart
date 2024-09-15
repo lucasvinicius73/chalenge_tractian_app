@@ -1,4 +1,4 @@
-import 'package:chalenge_tractian_app/shared/models/node_model.dart';
+import 'package:challenge_tractian_app/shared/models/node_model.dart';
 
 class AssetModel extends NodeModel {
   final String? sensorId;

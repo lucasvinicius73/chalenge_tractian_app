@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
-import 'package:chalenge_tractian_app/shared/models/compane_model.dart';
-import 'package:chalenge_tractian_app/shared/models/location_model.dart';
-import 'package:chalenge_tractian_app/shared/repository/repository.dart';
+import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
+import 'package:challenge_tractian_app/shared/models/location_model.dart';
+import 'package:challenge_tractian_app/shared/repository/repository.dart';
 import 'package:http/http.dart' as http;
 
 class HttpApiRepository implements Repository {

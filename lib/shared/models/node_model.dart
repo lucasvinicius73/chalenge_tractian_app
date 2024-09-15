@@ -1,5 +1,5 @@
-import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
-import 'package:chalenge_tractian_app/shared/models/location_model.dart';
+import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/location_model.dart';
 
 class NodeModel {
   final String id;

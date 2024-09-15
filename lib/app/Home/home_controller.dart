@@ -1,6 +1,6 @@
-import 'package:chalenge_tractian_app/shared/models/compane_model.dart';
-import 'package:chalenge_tractian_app/shared/repository/http_api_repository.dart';
-import 'package:chalenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
+import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
+import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
 
 class HomeController extends ChangeNotifier {

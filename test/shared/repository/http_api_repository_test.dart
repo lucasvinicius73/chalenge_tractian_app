@@ -1,7 +1,7 @@
-import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
-import 'package:chalenge_tractian_app/shared/models/compane_model.dart';
-import 'package:chalenge_tractian_app/shared/models/location_model.dart';
-import 'package:chalenge_tractian_app/shared/repository/http_api_repository.dart';
+import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
+import 'package:challenge_tractian_app/shared/models/location_model.dart';
+import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() async {

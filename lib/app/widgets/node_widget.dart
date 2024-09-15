@@ -1,6 +1,6 @@
-import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
-import 'package:chalenge_tractian_app/shared/models/location_model.dart';
-import 'package:chalenge_tractian_app/shared/models/node_model.dart';
+import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/location_model.dart';
+import 'package:challenge_tractian_app/shared/models/node_model.dart';
 import 'package:flutter/material.dart';
 
 class NodeWidget extends StatefulWidget {

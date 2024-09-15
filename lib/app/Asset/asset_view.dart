@@ -1,9 +1,9 @@
-import 'package:chalenge_tractian_app/app/Asset/asset_controller.dart';
-import 'package:chalenge_tractian_app/app/Asset/custom_header_assets.dart';
-import 'package:chalenge_tractian_app/app/widgets/custom_app_bar.dart';
-import 'package:chalenge_tractian_app/app/widgets/node_widget.dart';
-import 'package:chalenge_tractian_app/shared/models/compane_model.dart';
-import 'package:chalenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
+import 'package:challenge_tractian_app/app/Asset/custom_header_assets.dart';
+import 'package:challenge_tractian_app/app/widgets/custom_app_bar.dart';
+import 'package:challenge_tractian_app/app/widgets/node_widget.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
+import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 
