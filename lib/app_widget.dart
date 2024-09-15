@@ -1,5 +1,5 @@
-import 'package:chalenge_tractian_app/app/Asset/asset_page.dart';
-import 'package:chalenge_tractian_app/app/Home/home_page.dart';
+import 'package:chalenge_tractian_app/app/Asset/asset_view.dart';
+import 'package:chalenge_tractian_app/app/Home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'shared/themes/theme.dart';
 

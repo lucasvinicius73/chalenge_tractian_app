@@ -17,14 +17,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     controller.getCompanies();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       body: ListenableBuilder(
         listenable: controller,
         builder: (context, child) {

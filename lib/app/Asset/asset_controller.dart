@@ -23,9 +23,11 @@ class AssetController extends ChangeNotifier {
   );
 
   fetchAll(String companieId) async {
+    mapNodes.clear();
     await getAssets(companieId);
     await getLocations(companieId);
-    buildTree();
+    await buildTree();
+    await printTree(root);
     notifyListeners();
   }
 
@@ -111,6 +113,16 @@ class AssetController extends ChangeNotifier {
       return newNode;
     }
     return null;
+  }
+
+  Map<NodeModel, int> mapNodes = {};
+
+  printTree(NodeModel node, [int depth = 0]) {
+    mapNodes[node] = depth;
+    for (var child in node.children) {
+      printTree(child, depth + 1);
+    }
+    notifyListeners();
   }
 
   getAssetState() {

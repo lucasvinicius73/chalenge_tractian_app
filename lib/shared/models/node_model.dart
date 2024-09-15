@@ -7,6 +7,7 @@ class NodeModel {
   final String? parentId;
   final String? locationId;
   List<NodeModel> children = [];
+  final bool isExpanded = false;
 
   NodeModel(
       {required this.id, required this.name, this.parentId, this.locationId});

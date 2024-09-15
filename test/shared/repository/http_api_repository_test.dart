@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
   final repository = HttpApiRepository();
-  List<CompaneModel> companies = await repository.getCompanies();
+  List<CompanyModel> companies = await repository.getCompanies();
   List<AssetModel> assets = await repository.getAssets("662fd0ee639069143a8fc387");
   List<LocationModel> locations = await repository.getLocations("662fd0ee639069143a8fc387");
   print(companies[0].name);

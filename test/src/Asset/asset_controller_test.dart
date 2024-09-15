@@ -8,30 +8,20 @@ void main() async {
 
   await controller.fetchAll("662fd0ee639069143a8fc387");
 
-  NodeModel? searchNode =
-      controller.searchAndBuildTree(controller.root, "Motor");
-  NodeModel? filteredRoot =
-      controller.filterAndBuildTree(controller.root, "alert");
+  // NodeModel? searchNode =
+  //     controller.searchAndBuildTree(controller.root, "Motor");
+  // NodeModel? filteredRoot =
+  //     controller.filterAndBuildTree(controller.root, "alert");
 
-  if (filteredRoot != null) {
-    print("Estrutura da árvore filtrada:");
-    printTree(filteredRoot);
-  } else {
-    print("Nenhum nó encontrado com nome semelhante.");
+  controller.printTree(controller.root);
+
+  for (var node in controller.mapNodes.keys) {
+    int depth = controller.mapNodes[node]!;
+    print("${"  "*depth}${node.name}");
   }
 }
 
-// Função auxiliar para exibir a árvore
-void printTree(NodeModel node, [int depth = 0]) {
-  if (node is AssetModel && node.status != null) {
-    print('${'  ' * depth}${node.name}  Status: ${node.status}');
-  } else {
-    print('${'  ' * depth}${node.name}');
-  }
-  for (var child in node.children) {
-    printTree(child, depth + 1);
-  }
-}
+
 
   // group("AssetController Test", () {
   //   test("Lista de Assets", () async {
