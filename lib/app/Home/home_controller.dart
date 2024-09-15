@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class HomeController extends ChangeNotifier {
   HttpApiRepository repository = HttpApiRepository();
 
-  List<CompaneModel> companies = [];
+  List<CompanyModel> companies = [];
 
   StateModel _state = StateModel();
 

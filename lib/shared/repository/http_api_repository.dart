@@ -20,13 +20,13 @@ class HttpApiRepository implements Repository {
   }
 
   @override
-  Future<List<CompaneModel>> getCompanies() async {
-    List<CompaneModel> companies = [];
+  Future<List<CompanyModel>> getCompanies() async {
+    List<CompanyModel> companies = [];
     var url = Uri.parse("https://fake-api.tractian.com/companies");
     var response = await http.get(url);
     var decodeResponse = jsonDecode(utf8.decode(response.bodyBytes)) as List;
     companies =
-        decodeResponse.map((json) => CompaneModel.fromJson(json)).toList();
+        decodeResponse.map((json) => CompanyModel.fromJson(json)).toList();
     return companies;
   }
 

@@ -1,11 +1,10 @@
-class CompaneModel {
+class CompanyModel {
   final String id;
   final String name;
 
-  CompaneModel({required this.id, required this.name});
+  CompanyModel({required this.id, required this.name});
 
-  factory CompaneModel.fromJson(Map json){
-    return CompaneModel(id: json["id"],name: json["name"]);
+  factory CompanyModel.fromJson(Map json) {
+    return CompanyModel(id: json["id"], name: json["name"]);
   }
-  
 }

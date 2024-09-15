@@ -1,6 +1,6 @@
 import 'package:chalenge_tractian_app/shared/models/asset_model.dart';
 import 'package:chalenge_tractian_app/shared/models/node_model.dart';
-import 'package:chalenge_tractian_app/src/Asset/asset_controller.dart';
+import 'package:chalenge_tractian_app/app/Asset/asset_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() async {
