@@ -16,6 +16,7 @@ dependencies:
   http: ^1.2.2
   get_it: ^7.7.0
   string_similarity: ^2.1.1
+  super_sliver_list: ^0.4.1
 
 dev_dependencies:
   flutter_test:

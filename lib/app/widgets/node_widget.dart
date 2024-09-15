@@ -15,6 +15,11 @@ bool drop = false;
 
 class _NodeWidgetState extends State<NodeWidget> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     String icon = '';
     Icon? status;

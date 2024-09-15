@@ -17,6 +17,8 @@ class AssetController extends ChangeNotifier {
   StateModel _stateAsset = StateModel();
   StateModel _stateBuildTree = StateModel();
 
+  bool showFab = false;
+
   NodeModel root = NodeModel(
     id: "id",
     name: "name",
@@ -129,6 +131,12 @@ class AssetController extends ChangeNotifier {
     for (var child in node.children) {
       printTree(child, depth + 1);
     }
+    notifyListeners();
+  }
+
+  setShowFab(bool set) {
+    print("Mostrando a FAB");
+    showFab = set;
     notifyListeners();
   }
 
