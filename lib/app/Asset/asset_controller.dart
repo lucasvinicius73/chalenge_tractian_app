@@ -3,39 +3,43 @@ import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/models/location_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
 import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
+import 'package:challenge_tractian_app/shared/service/search_node_service.dart';
+import 'package:challenge_tractian_app/shared/service/tree_build_service.dart';
 import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
 import 'package:string_similarity/string_similarity.dart';
 
 class AssetController extends ChangeNotifier {
-  HttpApiRepository repository = HttpApiRepository();
+  final HttpApiRepository repository;
+  final TreeBuildService treeBuildService;
+  final SearchNodeService searchNodeService;
+
+  AssetController({
+    required this.repository,
+    required this.treeBuildService,
+    required this.searchNodeService,
+  });
 
   List<LocationModel> locations = [];
   List<AssetModel> assets = [];
-  List<NodeModel> path = [];
+  NodeModel root = NodeModel(id: "id", name: "name");
+
   Map<NodeModel, int> mapNodes = {};
   NodeModel? searchNode;
-
   StateModel _stateBuildTree = StateModel();
 
   bool showFab = false;
   bool critic = false;
   bool operating = false;
 
-  NodeModel root = NodeModel(
-    id: "id",
-    name: "name",
-  );
-
   fetchAll(CompanyModel companyModel) async {
     setBuildTreeState(Loading());
     disposeAll();
     root = NodeModel(id: "id", name: companyModel.name);
     try {
-      await getAssets(companyModel.id);
-      await getLocations(companyModel.id);
-      await buildTree();
-      await printTree(root);
+      await _fetchAssetsAndLocations(companyModel.id);
+      root = treeBuildService.buildTree(locations, assets);
+      _updateTree(root);
       setBuildTreeState(Complete());
     } catch (e) {
       setBuildTreeState(Error(error: "$e"));
@@ -46,10 +50,10 @@ class AssetController extends ChangeNotifier {
 
   fetchSearch(String stringSearch) async {
     setBuildTreeState(Loading());
-    mapNodes.clear();
     try {
-      searchNode = searchAndBuildTree(root, stringSearch);
-      await printTree(searchNode!);
+      searchNode =
+          searchNodeService.searchAndBuildTree(root, stringSearch, 0.2);
+      _updateTree(searchNode!);
       setBuildTreeState(Complete());
     } catch (e) {
       setBuildTreeState(Error(error: "$e"));
@@ -57,95 +61,27 @@ class AssetController extends ChangeNotifier {
     notifyListeners();
   }
 
-  fetchFilter(String stringFilter) async {
+  fetchFilter(String filterTerm) async {
     setBuildTreeState(Loading());
-    mapNodes.clear();
     try {
-      searchNode = filterAndBuildTree(root, stringFilter);
-      await printTree(searchNode!);
+      searchNode = searchNodeService.filterAndBuildTree(root, filterTerm);
+      _updateTree(searchNode!);
       setBuildTreeState(Complete());
     } catch (e) {
       setBuildTreeState(Error(error: "$e"));
     }
+  }
+
+  Future<void> _fetchAssetsAndLocations(String companyId) async {
+    locations = await repository.getLocations(companyId);
+    assets = await repository.getAssets(companyId);
     notifyListeners();
   }
 
-  getLocations(String companieId) async {
-    locations = await repository.getLocations(companieId);
+  void _updateTree(NodeModel node) {
+    mapNodes.clear();
+    printTree(node);
     notifyListeners();
-  }
-
-  getAssets(String companieId) async {
-    assets = await repository.getAssets(companieId);
-    notifyListeners();
-  }
-
-  buildTree() {
-    Map<String, NodeModel> nodeMap = {};
-
-    for (var local in locations) {
-      nodeMap[local.id] = local;
-    }
-
-    for (var asset in assets) {
-      nodeMap[asset.id] = asset;
-    }
-
-    for (var node in nodeMap.values) {
-      String? parentId = node.parentId;
-      String? locationId = node.locationId;
-      if (parentId == null && locationId == null) {
-        root.addChild(node);
-      } else if (locationId != null) {
-        nodeMap[locationId]!.addChild(node);
-      } else {
-        nodeMap[parentId]!.addChild(node);
-      }
-    }
-  }
-
-  NodeModel? searchAndBuildTree(NodeModel node, String searchTerm) {
-    double levelSimilarity = 0.2;
-
-    double similarity =
-        node.name.toLowerCase().similarityTo(searchTerm.toLowerCase());
-
-    List<NodeModel> childrenFound = [];
-
-    for (var child in node.children) {
-      NodeModel? newNode = searchAndBuildTree(child, searchTerm);
-      if (newNode != null) {
-        childrenFound.add(newNode);
-      }
-    }
-
-    if (similarity >= levelSimilarity || childrenFound.isNotEmpty) {
-      NodeModel newNode = NodeModel.createNewNode(node);
-      newNode.children = childrenFound;
-      return newNode;
-    }
-    return null;
-  }
-
-  NodeModel? filterAndBuildTree(NodeModel node, String filterTerm) {
-    bool match = node is AssetModel ? node.status == filterTerm : false;
-
-    List<NodeModel> childrenFound = [];
-
-    for (var child in node.children) {
-      NodeModel? newNode = filterAndBuildTree(child, filterTerm);
-      if (newNode != null) {
-        childrenFound.add(newNode);
-      }
-    }
-
-    if (match || childrenFound.isNotEmpty) {
-      NodeModel newNode = NodeModel.createNewNode(node);
-
-      newNode.children = childrenFound;
-      return newNode;
-    }
-    return null;
   }
 
   printTree(NodeModel node, [int depth = 0]) {
@@ -159,24 +95,35 @@ class AssetController extends ChangeNotifier {
   }
 
   void updateTree() {
-    mapNodes.clear();
-    printTree(root);
-    notifyListeners();
+    _updateTree(root);
   }
+
   void updateTreeSearch() {
+    if (searchNode != null) {
+      _updateTree(searchNode!);
+    }
+  }
+
+  void disposeAll() {
+    critic = false;
+    operating = false;
     mapNodes.clear();
-    printTree(searchNode!);
-    notifyListeners();
+    searchNode = null;
+  }
+
+  void disposeSearch() {
+    setBuildTreeState(Loading());
+    critic = false;
+    operating = false;
+    mapNodes.clear();
+    searchNode = null;
+    _updateTree(root);
+    setBuildTreeState(Complete());
   }
 
   setShowFab(bool set) {
     print("Mostrando a FAB");
     showFab = set;
-    notifyListeners();
-  }
-
-  disposerTreeView() {
-    mapNodes.clear();
     notifyListeners();
   }
 
@@ -205,29 +152,10 @@ class AssetController extends ChangeNotifier {
     }
   }
 
-  disposeAll() {
-    critic = false;
-    operating = false;
-    mapNodes.clear();
-    searchNode = null;
-  }
-
-  disposeSearch() {
-    setBuildTreeState(Loading());
-    critic = false;
-    operating = false;
-    mapNodes.clear();
-    searchNode = null;
-    printTree(root);
-    setBuildTreeState(Complete());
-    notifyListeners();
-  }
-
-  getBuildTreeState() {
-    return _stateBuildTree;
-  }
+  getBuildTreeState() => _stateBuildTree;
 
   setBuildTreeState(StateModel newState) {
     _stateBuildTree = newState;
+    notifyListeners();
   }
 }

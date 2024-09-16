@@ -51,11 +51,10 @@ class _NodeWidgetState extends State<NodeWidget> {
     return InkWell(
       onTap: node.children.isNotEmpty
           ? () {
+              node.changeIsExpanded();
               if (controller.searchNode != null) {
-                node.changeIsExpanded();
                 controller.updateTreeSearch();
               } else {
-                node.changeIsExpanded();
                 controller.updateTree();
               }
             }
