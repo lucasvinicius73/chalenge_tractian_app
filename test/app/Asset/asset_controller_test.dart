@@ -1,4 +1,5 @@
 import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
 import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,7 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() async {
   var controller = AssetController();
 
-  await controller.fetchAll("662fd0ee639069143a8fc387");
+  await controller
+      .fetchAll(CompanyModel(id: "662fd0ee639069143a8fc387", name: "Jaguar"));
 
   //await controller.fetchSearch("Motor");
   await controller.fetchFilter("alert");

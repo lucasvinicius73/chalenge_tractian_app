@@ -1,3 +1,5 @@
+import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
+import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/models/asset_model.dart';
 import 'package:challenge_tractian_app/shared/models/location_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
@@ -11,9 +13,9 @@ class NodeWidget extends StatefulWidget {
   State<NodeWidget> createState() => _NodeWidgetState();
 }
 
-bool drop = false;
-
 class _NodeWidgetState extends State<NodeWidget> {
+  var controller = getIt<AssetController>();
+
   @override
   void initState() {
     super.initState();
@@ -47,36 +49,49 @@ class _NodeWidgetState extends State<NodeWidget> {
       }
     }
     return InkWell(
-      onTap: () {
-        setState(() {
-          drop = !drop;
-        });
-      },
-      child: Row(
-        children: [
-          node.children.isNotEmpty
-              ? Icon(drop == true ? Icons.arrow_drop_down : Icons.arrow_drop_up)
-              : const SizedBox(
-                  width: 23,
-                ),
-          icon.isNotEmpty
-              ? Image.asset(
-                  icon,
-                  scale: 1.7,
-                )
-              : const SizedBox(),
-          SizedBox(
-            width: 150,
-            child: Text(
-              node.name,
-              overflow: TextOverflow.ellipsis,
+      onTap: node.children.isNotEmpty
+          ? () {
+              if (controller.searchNode != null) {
+                node.changeIsExpanded();
+                controller.updateTreeSearch();
+              } else {
+                node.changeIsExpanded();
+                controller.updateTree();
+              }
+            }
+          : null,
+      child: SizedBox(
+        height: 25,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            node.children.isNotEmpty
+                ? Icon(node.isExpanded == true
+                    ? Icons.arrow_drop_down
+                    : Icons.arrow_drop_up)
+                : const SizedBox(
+                    width: 23,
+                  ),
+            icon.isNotEmpty
+                ? Image.asset(
+                    icon,
+                    scale: 1.7,
+                  )
+                : const SizedBox(),
+            SizedBox(
+              width: 170,
+              child: Text(
+                node.name,
+                overflow: TextOverflow.ellipsis,
+                // maxLines: 2,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: status ?? const SizedBox(),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: status ?? const SizedBox(),
+            )
+          ],
+        ),
       ),
     );
   }

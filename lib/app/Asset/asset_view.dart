@@ -2,6 +2,7 @@ import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
 import 'package:challenge_tractian_app/app/Asset/custom_header_assets.dart';
 import 'package:challenge_tractian_app/app/widgets/custom_app_bar.dart';
 import 'package:challenge_tractian_app/app/widgets/node_widget.dart';
+import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +17,12 @@ class AssetView extends StatefulWidget {
 }
 
 class _AssetViewState extends State<AssetView> {
-  var controller = AssetController();
+  var controller = getIt<AssetController>();
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    controller.fetchAll(widget.companyModel.id);
+    controller.fetchAll(widget.companyModel);
     _scrollController.addListener(() {
       if (_scrollController.position.pixels > 1000) {
         if (controller.showFab == false) {

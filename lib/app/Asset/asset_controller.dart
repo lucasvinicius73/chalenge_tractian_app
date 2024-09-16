@@ -1,4 +1,5 @@
 import 'package:challenge_tractian_app/shared/models/asset_model.dart';
+import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/models/location_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
 import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
@@ -13,6 +14,7 @@ class AssetController extends ChangeNotifier {
   List<AssetModel> assets = [];
   List<NodeModel> path = [];
   Map<NodeModel, int> mapNodes = {};
+  NodeModel? searchNode;
 
   StateModel _stateBuildTree = StateModel();
 
@@ -25,12 +27,13 @@ class AssetController extends ChangeNotifier {
     name: "name",
   );
 
-  fetchAll(String companieId) async {
+  fetchAll(CompanyModel companyModel) async {
     setBuildTreeState(Loading());
-    mapNodes.clear();
+    disposeAll();
+    root = NodeModel(id: "id", name: companyModel.name);
     try {
-      await getAssets(companieId);
-      await getLocations(companieId);
+      await getAssets(companyModel.id);
+      await getLocations(companyModel.id);
       await buildTree();
       await printTree(root);
       setBuildTreeState(Complete());
@@ -45,7 +48,7 @@ class AssetController extends ChangeNotifier {
     setBuildTreeState(Loading());
     mapNodes.clear();
     try {
-      NodeModel? searchNode = searchAndBuildTree(root, stringSearch);
+      searchNode = searchAndBuildTree(root, stringSearch);
       await printTree(searchNode!);
       setBuildTreeState(Complete());
     } catch (e) {
@@ -58,7 +61,7 @@ class AssetController extends ChangeNotifier {
     setBuildTreeState(Loading());
     mapNodes.clear();
     try {
-      NodeModel? searchNode = filterAndBuildTree(root, stringFilter);
+      searchNode = filterAndBuildTree(root, stringFilter);
       await printTree(searchNode!);
       setBuildTreeState(Complete());
     } catch (e) {
@@ -147,9 +150,22 @@ class AssetController extends ChangeNotifier {
 
   printTree(NodeModel node, [int depth = 0]) {
     mapNodes[node] = depth;
-    for (var child in node.children) {
-      printTree(child, depth + 1);
+    if (node.isExpanded) {
+      for (var child in node.children) {
+        printTree(child, depth + 1);
+      }
     }
+    notifyListeners();
+  }
+
+  void updateTree() {
+    mapNodes.clear();
+    printTree(root);
+    notifyListeners();
+  }
+  void updateTreeSearch() {
+    mapNodes.clear();
+    printTree(searchNode!);
     notifyListeners();
   }
 
@@ -189,11 +205,19 @@ class AssetController extends ChangeNotifier {
     }
   }
 
+  disposeAll() {
+    critic = false;
+    operating = false;
+    mapNodes.clear();
+    searchNode = null;
+  }
+
   disposeSearch() {
     setBuildTreeState(Loading());
     critic = false;
     operating = false;
     mapNodes.clear();
+    searchNode = null;
     printTree(root);
     setBuildTreeState(Complete());
     notifyListeners();

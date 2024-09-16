@@ -7,13 +7,17 @@ class NodeModel {
   final String? parentId;
   final String? locationId;
   List<NodeModel> children = [];
-  final bool isExpanded = false;
+  bool isExpanded = true;
 
   NodeModel(
       {required this.id, required this.name, this.parentId, this.locationId});
 
   void addChild(NodeModel child) {
     children.add(child);
+  }
+
+  void changeIsExpanded() {
+    isExpanded = !isExpanded;
   }
 
   factory NodeModel.createNewNode(NodeModel node) {
