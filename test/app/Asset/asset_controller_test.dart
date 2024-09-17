@@ -2,7 +2,7 @@ import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/models/asset_model.dart';
 import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
-import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
+import 'package:challenge_tractian_app/app/asset/asset_controller.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() async {

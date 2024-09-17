@@ -1,4 +1,4 @@
-import 'package:challenge_tractian_app/app/Asset/asset_controller.dart';
+import 'package:challenge_tractian_app/app/asset/asset_controller.dart';
 import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
 import 'package:challenge_tractian_app/shared/service/search_node_service.dart';
 import 'package:challenge_tractian_app/shared/service/tree_build_service.dart';

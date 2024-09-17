@@ -7,7 +7,6 @@ import 'package:challenge_tractian_app/shared/service/search_node_service.dart';
 import 'package:challenge_tractian_app/shared/service/tree_build_service.dart';
 import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
-import 'package:string_similarity/string_similarity.dart';
 
 class AssetController extends ChangeNotifier {
   final HttpApiRepository repository;

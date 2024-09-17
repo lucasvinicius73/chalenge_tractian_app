@@ -1,6 +1,8 @@
-import 'package:challenge_tractian_app/app/Home/home_controller.dart';
-import 'package:challenge_tractian_app/app/widgets/custom_app_bar.dart';
-import 'package:challenge_tractian_app/app/widgets/menu_button.dart';
+import 'package:challenge_tractian_app/app/home/home_controller.dart';
+import 'package:challenge_tractian_app/shared/widgets/custom_app_bar.dart';
+import 'package:challenge_tractian_app/shared/widgets/error_widget.dart';
+import 'package:challenge_tractian_app/shared/widgets/loading_widget.dart';
+import 'package:challenge_tractian_app/shared/widgets/menu_button.dart';
 import 'package:challenge_tractian_app/shared/states.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +33,9 @@ class _HomeViewState extends State<HomeView> {
           Widget body = Container();
           switch (state) {
             case Loading _:
-              body = buildLoading();
+              body = const LoadingWidget();
             case Error _:
-              body = buildErrorWarning(state);
+              body = WidgetError(error: state, title: "Não foi possivel carregar as empresas",);
             default:
               body = buildBodyView();
           }
@@ -50,17 +52,5 @@ class _HomeViewState extends State<HomeView> {
       itemBuilder: (context, index) =>
           MenuButton(companyModel: controller.companies[index]),
     ));
-  }
-
-  Widget buildLoading() {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-
-  Widget buildErrorWarning(Error error) {
-    return Center(
-      child: Text("Não foi possivel carregar as empresas: \n$error"),
-    );
   }
 }
