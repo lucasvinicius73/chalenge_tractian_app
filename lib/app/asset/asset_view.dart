@@ -1,13 +1,13 @@
 import 'package:challenge_tractian_app/app/asset/asset_controller.dart';
-import 'package:challenge_tractian_app/shared/widgets/custom_app_bar.dart';
-import 'package:challenge_tractian_app/shared/widgets/error_widget.dart';
-import 'package:challenge_tractian_app/shared/widgets/header_assets_widget.dart';
-import 'package:challenge_tractian_app/shared/widgets/loading_widget.dart';
-import 'package:challenge_tractian_app/shared/widgets/node_widget.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/custom_app_bar.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/error_widget.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/header_assets_widget.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/loading_widget.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/node_widget.dart';
 import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/models/compane_model.dart';
 import 'package:challenge_tractian_app/shared/states.dart';
-import 'package:challenge_tractian_app/shared/widgets/sliverHeader.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/sliverHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';
 

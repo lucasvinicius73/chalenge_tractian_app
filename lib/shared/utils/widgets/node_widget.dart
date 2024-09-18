@@ -35,16 +35,14 @@ class _NodeWidgetState extends State<NodeWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.nodeModel.children.isNotEmpty
-          ? () {
-              widget.nodeModel.changeIsExpanded();
-              if (controller.searchNode != null) {
-                controller.updateTreeSearch();
-              } else {
-                controller.updateTree();
-              }
-            }
-          : null,
+      onTap: () {
+        widget.nodeModel.changeIsExpanded();
+        if (controller.searchNode != null) {
+          controller.updateTreeSearch();
+        } else {
+          controller.updateTree();
+        }
+      },
       child: SizedBox(
         height: 25,
         child: Row(
@@ -84,7 +82,7 @@ class _NodeWidgetState extends State<NodeWidget> {
   void _setIconAndStatus(NodeModel node) {
     if (node is LocationModel) {
       icon = 'assets/icons/GoLocation.png';
-      status = null; 
+      status = null;
     } else if (node is AssetModel) {
       icon = 'assets/icons/asset.png';
       if (node.sensorType != null) {

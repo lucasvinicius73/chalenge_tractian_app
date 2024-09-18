@@ -1,7 +1,7 @@
 import 'package:challenge_tractian_app/app/asset/asset_view.dart';
 import 'package:challenge_tractian_app/app/home/home_view.dart';
 import 'package:flutter/material.dart';
-import 'shared/themes/theme.dart';
+import 'shared/utils/themes/theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

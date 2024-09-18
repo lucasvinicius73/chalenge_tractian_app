@@ -1,6 +1,6 @@
 import 'package:challenge_tractian_app/app/asset/asset_controller.dart';
 import 'package:challenge_tractian_app/providers.dart';
-import 'package:challenge_tractian_app/shared/widgets/custom_button_header.dart';
+import 'package:challenge_tractian_app/shared/utils/widgets/custom_button_header.dart';
 import 'package:flutter/material.dart';
 
 class WidgetHeader extends StatelessWidget {
@@ -94,7 +94,10 @@ class WidgetHeader extends StatelessWidget {
                         height: 32,
                         width: 32,
                         child: const Center(
-                          child: Icon(Icons.refresh),
+                          child: Icon(
+                            Icons.refresh,
+                            color: Color(0xFF77818C),
+                          ),
                         ),
                       ),
                     )

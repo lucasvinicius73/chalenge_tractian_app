@@ -1,5 +1,3 @@
-import 'package:challenge_tractian_app/app/asset/asset_controller.dart';
-import 'package:challenge_tractian_app/providers.dart';
 import 'package:flutter/material.dart';
 
 class CustomButtonHeader extends StatelessWidget {
@@ -7,6 +5,8 @@ class CustomButtonHeader extends StatelessWidget {
   final String iconPath;
   final bool isActive;
   final VoidCallback onPressed;
+  final Color isActiveButtonColor = Colors.blue;
+  final Color buttonColor = const Color(0xFF77818C);
   const CustomButtonHeader(
       {super.key,
       required this.label,
@@ -24,13 +24,13 @@ class CustomButtonHeader extends StatelessWidget {
           height: 32,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(3),
-            border: Border.all(
-                color: isActive ? Colors.blue : const Color(0xFF77818C)),
+            border:
+                Border.all(color: isActive ? isActiveButtonColor : buttonColor),
           ),
           child: Row(
             children: [
               Image.asset(iconPath,
-                  color: isActive ? Colors.blue : const Color(0xFF77818C)),
+                  color: isActive ? isActiveButtonColor : buttonColor),
               const SizedBox(
                 width: 5,
               ),
@@ -38,34 +38,12 @@ class CustomButtonHeader extends StatelessWidget {
                 label,
                 maxLines: 1,
                 style: TextStyle(
-                  color: isActive ? Colors.blue : const Color(0xFF77818C),
+                  color: isActive ? isActiveButtonColor : buttonColor,
                   fontSize: 14,
                 ),
               )
             ],
           )),
-    );
-
-    OutlinedButton.icon(
-      style: ButtonStyle(
-        shape: WidgetStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-        ),
-        side: WidgetStateProperty.all(
-          BorderSide(color: isActive ? Colors.blue : const Color(0xFF77818C)),
-        ),
-      ),
-      icon: Image.asset(iconPath,
-          color: isActive ? Colors.blue : const Color(0xFF77818C)),
-      label: Text(
-        label,
-        maxLines: 1,
-        style: TextStyle(
-          color: isActive ? Colors.blue : const Color(0xFF77818C),
-          fontSize: 14,
-        ),
-      ),
-      onPressed: onPressed,
     );
   }
 }
