@@ -35,7 +35,7 @@ class _AssetViewState extends State<AssetView> {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, child) {
-        final state = controller.getBuildTreeState();
+        final StateModel state = controller.getBuildTreeState();
         Widget widgetList = Container();
         switch (state) {
           case Loading _:
@@ -64,6 +64,7 @@ class _AssetViewState extends State<AssetView> {
               ),
             ),
             body: CustomScrollView(
+              //cacheExtent: 500,
               controller: _scrollController,
               slivers: [
                 const SliverPersistentHeader(
@@ -78,15 +79,17 @@ class _AssetViewState extends State<AssetView> {
   }
 
   Widget buildTree() {
-    return SuperSliverList(
+    return SliverList(
       delegate: SliverChildBuilderDelegate(
         childCount: controller.mapNodes.length,
         (context, index) {
           final node = controller.mapNodes.keys.toList()[index];
           int depth = controller.mapNodes[node]!;
-          return Padding(
-              padding: EdgeInsets.only(left: 20.0 * depth),
-              child: NodeWidget(nodeModel: node));
+          return RepaintBoundary(
+            child: Padding(
+                padding: EdgeInsets.only(left: 20.0 * depth),
+                child: NodeWidget(nodeModel: node)),
+          );
         },
       ),
     );
@@ -99,8 +102,12 @@ class _AssetViewState extends State<AssetView> {
 
   Widget buildErrorWarning(Error error) {
     return SliverFillRemaining(
-        child: WidgetError(
-            error: error, title: "Não foi possivel montar a arvore"));
+      child: WidgetError(
+        error: error,
+        title: "Não foi possivel montar a arvore",
+        restard: () => controller.fetchAll(widget.companyModel),
+      ),
+    );
   }
 
   void _handleScroll() {

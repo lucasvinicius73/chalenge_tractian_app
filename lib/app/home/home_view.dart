@@ -39,6 +39,7 @@ class _HomeViewState extends State<HomeView> {
               body = WidgetError(
                 error: state,
                 title: "Não foi possivel carregar as empresas",
+                restard: () => controller.getCompanies(),
               );
             default:
               body = buildBodyView();
