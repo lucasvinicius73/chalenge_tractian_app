@@ -5,7 +5,7 @@ import 'package:challenge_tractian_app/shared/models/node_model.dart';
 import 'package:challenge_tractian_app/shared/repository/http_api_repository.dart';
 import 'package:challenge_tractian_app/shared/service/search_node_service.dart';
 import 'package:challenge_tractian_app/shared/service/tree_build_service.dart';
-import 'package:challenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/shared/states/states.dart';
 import 'package:flutter/material.dart';
 
 class AssetController extends ChangeNotifier {
@@ -25,7 +25,7 @@ class AssetController extends ChangeNotifier {
 
   Map<NodeModel, int> mapNodes = {};
   NodeModel? searchNode;
-  StateModel _stateBuildTree = StateModel();
+  StateModel _stateBuildTree = Loading();
 
   bool showFab = false;
   bool critic = false;

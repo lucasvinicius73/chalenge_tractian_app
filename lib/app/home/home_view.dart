@@ -1,9 +1,10 @@
 import 'package:challenge_tractian_app/app/home/home_controller.dart';
+import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/utils/widgets/custom_app_bar.dart';
 import 'package:challenge_tractian_app/shared/utils/widgets/error_widget.dart';
 import 'package:challenge_tractian_app/shared/utils/widgets/loading_widget.dart';
 import 'package:challenge_tractian_app/shared/utils/widgets/menu_button.dart';
-import 'package:challenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/shared/states/states.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -14,7 +15,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  var controller = HomeController();
+  var controller = getIt<HomeController>();
 
   @override
   void initState() {
@@ -35,7 +36,10 @@ class _HomeViewState extends State<HomeView> {
             case Loading _:
               body = const LoadingWidget();
             case Error _:
-              body = WidgetError(error: state, title: "Não foi possivel carregar as empresas",);
+              body = WidgetError(
+                error: state,
+                title: "Não foi possivel carregar as empresas",
+              );
             default:
               body = buildBodyView();
           }

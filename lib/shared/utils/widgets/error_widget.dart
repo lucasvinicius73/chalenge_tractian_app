@@ -1,4 +1,4 @@
-import 'package:challenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/shared/states/states.dart';
 import 'package:flutter/material.dart';
 
 class WidgetError extends StatelessWidget {

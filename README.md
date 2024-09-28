@@ -42,4 +42,4 @@ Challenge proposed by Tractian for the position of Mobile Software Engineer. The
 │           └── <b>widgets/</b></pre>
 
 - **app/asset**: 
-- **app/home**
+- **app/home**:

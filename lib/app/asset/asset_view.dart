@@ -6,7 +6,7 @@ import 'package:challenge_tractian_app/shared/utils/widgets/loading_widget.dart'
 import 'package:challenge_tractian_app/shared/utils/widgets/node_widget.dart';
 import 'package:challenge_tractian_app/providers.dart';
 import 'package:challenge_tractian_app/shared/models/compane_model.dart';
-import 'package:challenge_tractian_app/shared/states.dart';
+import 'package:challenge_tractian_app/shared/states/states.dart';
 import 'package:challenge_tractian_app/shared/utils/widgets/sliverHeader.dart';
 import 'package:flutter/material.dart';
 import 'package:super_sliver_list/super_sliver_list.dart';

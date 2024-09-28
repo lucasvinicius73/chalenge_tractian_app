@@ -1,4 +1,6 @@
-class StateModel {}
+abstract class StateModel {}
+
+class NotStarted extends StateModel{}
 
 class Loading extends StateModel {}
 
