@@ -14,13 +14,16 @@ class HomeController extends ChangeNotifier {
 
   getCompanies() async {
     setState(Loading());
-    try {
-      companies = await repository.getCompanies();
+
+    final resultCompanies = await repository.getCompanies();
+
+    resultCompanies.fold((onSuccess) {
+      companies = onSuccess;
       setState(Complete());
-    } catch (e) {
-      setState(Error(error: '$e'));
-      print("$e");
-    }
+    }, (onFailure) {
+      setState(onFailure);
+    });
+
     notifyListeners();
   }
 

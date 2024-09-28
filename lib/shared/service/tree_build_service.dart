@@ -3,9 +3,10 @@ import 'package:challenge_tractian_app/shared/models/location_model.dart';
 import 'package:challenge_tractian_app/shared/models/node_model.dart';
 
 class TreeBuildService {
-  NodeModel buildTree(List<LocationModel> locations, List<AssetModel> assets) {
+  NodeModel buildTree(
+      String rootName, List<LocationModel> locations, List<AssetModel> assets) {
     Map<String, NodeModel> nodeMap = {};
-    NodeModel root = NodeModel(id: "id", name: "root");
+    NodeModel root = NodeModel(id: "id", name: rootName);
 
     for (var local in locations) {
       nodeMap[local.id] = local;

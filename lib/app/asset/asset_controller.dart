@@ -34,16 +34,9 @@ class AssetController extends ChangeNotifier {
   fetchAll(CompanyModel companyModel) async {
     setBuildTreeState(Loading());
     disposeAll();
-    root = NodeModel(id: "id", name: companyModel.name);
-    try {
-      await _fetchAssetsAndLocations(companyModel.id);
-      root = treeBuildService.buildTree(locations, assets);
-      _updateTree(root);
-      setBuildTreeState(Complete());
-    } catch (e) {
-      setBuildTreeState(Error(error: "$e"));
-    }
-
+    await _fetchAssetsAndLocations(companyModel.id);
+    root = treeBuildService.buildTree(companyModel.name, locations, assets);
+    _updateTree(root);
     notifyListeners();
   }
 
@@ -72,8 +65,20 @@ class AssetController extends ChangeNotifier {
   }
 
   Future<void> _fetchAssetsAndLocations(String companyId) async {
-    locations = await repository.getLocations(companyId);
-    assets = await repository.getAssets(companyId);
+    final resultLocations = await repository.getLocations(companyId);
+    final resultAssets = await repository.getAssets(companyId);
+    resultLocations.fold((success) {
+      locations = success;
+      setBuildTreeState(Complete());
+    }, (failure) {
+      setBuildTreeState(failure);
+    });
+    resultAssets.fold((success) {
+      assets = success;
+      setBuildTreeState(Complete());
+    }, (failure) {
+      setBuildTreeState(failure);
+    });
     notifyListeners();
   }
 
