@@ -79,7 +79,7 @@ class _AssetViewState extends State<AssetView> {
   }
 
   Widget buildTree() {
-    return SliverList(
+    return SuperSliverList(
       delegate: SliverChildBuilderDelegate(
         childCount: controller.mapNodes.length,
         (context, index) {
