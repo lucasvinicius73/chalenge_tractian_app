@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class NodeWidget extends StatefulWidget {
   final NodeModel nodeModel;
-  const NodeWidget({super.key, required this.nodeModel});
+  final int depth;
+  const NodeWidget({super.key, required this.nodeModel, required this.depth});
 
   @override
   State<NodeWidget> createState() => _NodeWidgetState();
@@ -43,37 +44,40 @@ class _NodeWidgetState extends State<NodeWidget> {
           controller.updateTree();
         }
       },
-      child: SizedBox(
-        height: 25,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            widget.nodeModel.children.isNotEmpty
-                ? Icon(widget.nodeModel.isExpanded == true
-                    ? Icons.arrow_drop_down
-                    : Icons.arrow_drop_up)
-                : const SizedBox(
-                    width: 23,
-                  ),
-            icon.isNotEmpty
-                ? Image.asset(
-                    icon,
-                    scale: 1.7,
-                  )
-                : const SizedBox(),
-            SizedBox(
-              width: 170,
-              child: Text(
-                widget.nodeModel.name,
-                overflow: TextOverflow.ellipsis,
-                // maxLines: 2,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20.0 * widget.depth),
+        child: SizedBox(
+          height: 25,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              widget.nodeModel.children.isNotEmpty
+                  ? Icon(widget.nodeModel.isExpanded == true
+                      ? Icons.arrow_drop_down
+                      : Icons.arrow_drop_up)
+                  : const SizedBox(
+                      width: 23,
+                    ),
+              icon.isNotEmpty
+                  ? Image.asset(
+                      icon,
+                      scale: 1.7,
+                    )
+                  : const SizedBox(),
+              SizedBox(
+                width: 170,
+                child: Text(
+                  widget.nodeModel.name,
+                  overflow: TextOverflow.ellipsis,
+                  // maxLines: 2,
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: status ?? const SizedBox(),
-            )
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: status ?? const SizedBox(),
+              )
+            ],
+          ),
         ),
       ),
     );

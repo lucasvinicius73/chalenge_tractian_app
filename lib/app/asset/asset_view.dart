@@ -88,9 +88,10 @@ class _AssetViewState extends State<AssetView> {
           final node = controller.mapNodes.keys.toList()[index];
           int depth = controller.mapNodes[node]!;
           return RepaintBoundary(
-            child: Padding(
-                padding: EdgeInsets.only(left: 20.0 * depth),
-                child: NodeWidget(nodeModel: node)),
+            child: NodeWidget(
+              nodeModel: node,
+              depth: depth,
+            ),
           );
         },
       ),

@@ -19,6 +19,10 @@ Challenge proposed by Tractian for the position of Mobile Software Engineer. The
 - [http: ^1.2.2](https://pub.dev/packages/http) 
 - [string_similarity: ^2.1.1](https://pub.dev/packages/string_similarity)
 - [super_sliver_list: ^0.4.1](https://pub.dev/packages/super_sliver_list)
+- [get_it: ^7.7.0](https://pub.dev/packages/get_it)
+- [equatable: ^2.0.5](https://pub.dev/packages/equatable)
+- [result_dart: ^1.1.1](https://pub.dev/packages/result_dart)
+- [mocktail: ^1.0.4](https://pub.dev/packages/mocktail)
 
 ## API consumed:
 - API: [fake-api.tractian.com](fake-api.tractian.com)
