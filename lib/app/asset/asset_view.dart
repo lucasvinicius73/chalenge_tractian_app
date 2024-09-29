@@ -42,6 +42,8 @@ class _AssetViewState extends State<AssetView> {
             widgetList = buildLoading();
           case Error _:
             widgetList = buildErrorWarning(state);
+          case Empty _:
+            widgetList = buildEmptyWarning();
           default:
             widgetList = buildTree();
         }
@@ -108,6 +110,21 @@ class _AssetViewState extends State<AssetView> {
         restard: () => controller.fetchAll(widget.companyModel),
       ),
     );
+  }
+
+  Widget buildEmptyWarning() {
+    return const SliverFillRemaining(
+        child: Center(
+            child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.search_off,
+          size: 50,
+        ),
+        Text("Não foram encontrados itens na Lista"),
+      ],
+    )));
   }
 
   void _handleScroll() {

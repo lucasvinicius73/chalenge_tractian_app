@@ -33,6 +33,9 @@ class WidgetHeader extends StatelessWidget {
                       if (value.isNotEmpty) {
                         controller.fetchSearch(value);
                       }
+                      if (value.isEmpty) {
+                        controller.disposeSearch();
+                      }
                     },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.only(

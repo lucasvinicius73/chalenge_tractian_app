@@ -43,14 +43,15 @@ class AssetController extends ChangeNotifier {
 
   fetchSearch(String stringSearch) async {
     setState(Loading());
-    try {
-      searchNode =
-          searchNodeService.searchAndBuildTree(root, stringSearch, 0.2);
+
+    searchNode = searchNodeService.searchAndBuildTree(root, stringSearch, 0.2);
+    if (searchNode != null) {
       _updateTree(searchNode!);
       setState(Complete());
-    } catch (e) {
-      setState(Error(error: "$e"));
+    } else {
+      setState(Empty());
     }
+
     notifyListeners();
   }
 
