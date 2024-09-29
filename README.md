@@ -67,6 +67,7 @@ The design patterns chosen to build this app were:
 
 
 ## Video Preview:
-https://github.com/user-attachments/assets/0eff441a-e70c-486f-9fa3-23b0b17d48f8
+https://github.com/user-attachments/assets/ce839c34-2be1-44f6-90fa-e16c6270380e
+
 
 
