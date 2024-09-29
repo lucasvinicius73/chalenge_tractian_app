@@ -74,17 +74,16 @@ class AssetController extends ChangeNotifier {
         results[0] as Result<List<LocationModel>, StateModel>;
     final resultAssets = results[1] as Result<List<AssetModel>, StateModel>;
 
-    void handleResult<NodeModel>(Result<List<NodeModel>, StateModel> result,
-        Function(List<NodeModel>) onSuccess) {
-      result.onSuccess((data) {
-        onSuccess(data);
-      }).onFailure((data) {
-        setState(data);
-      });
-    }
-
-    handleResult(resultLocations, (data) => locations = data);
-    handleResult(resultAssets, (data) => assets = data);
+    resultLocations.fold((onSuccess) {
+      locations = onSuccess;
+    }, (onFailure) {
+      setState(onFailure);
+    });
+    resultAssets.fold((onSuccess) {
+      assets = onSuccess;
+    }, (onFailure) {
+      setState(onFailure);
+    });
 
     if (resultLocations.isSuccess() && resultAssets.isSuccess()) {
       setState(Complete());
