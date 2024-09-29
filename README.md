@@ -45,5 +45,6 @@ Challenge proposed by Tractian for the position of Mobile Software Engineer. The
 - **app/home**:
 
 ## Video Preview:
-https://github.com/user-attachments/assets/027c967e-afd1-4265-8e10-4c353804b89a
+https://github.com/user-attachments/assets/0eff441a-e70c-486f-9fa3-23b0b17d48f8
+
 
