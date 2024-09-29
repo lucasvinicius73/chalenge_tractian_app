@@ -28,25 +28,43 @@ Challenge proposed by Tractian for the position of Mobile Software Engineer. The
 - API: [fake-api.tractian.com](fake-api.tractian.com)
 
 ## Architecture Overview:
-**Folder Structure:**
-  <pre>├── <b>lib</b>
-│   ├── <b>app</b>
-│   │   ├── <b>asset/</b>
-│   │   └── <b>home/</b>
+
+#### Design Patterns:
+The design patterns chosen to build this app were:
+**MVC:** Structuring the project with the Model, View and Controllers entities. Used to separate the logical functions from the UI
+**Repository:** Used to separate the app's communication function with the external API layer
+**Service:** It was used to organize the application's business logic, encapsulating specific and complex operations that shouldn't be directly in the models or controllers 
+
+#### Folder Structure:
+<pre>
+├──<b>lib/</b>
+│   ├──<b>app/</b>
+│   │   ├──<b>asset/</b>
+│   │   └──<b>home/</b>
 │   ├── app_widget.dart
 │   ├── main.dart
 │   ├── providers.dart
-│   └── <b>shared</b>
-│       ├── <b>models/</b>
-│       ├── <b>repository/</b>
-│       ├── <b>service/</b>
-│       ├── states.dart
-│       └── <b>utils</b>
-│           ├── <b>themes/</b>
-│           └── <b>widgets/</b></pre>
+│   └──<b>shared/</b>
+│       ├──<b>models/</b>
+│       ├──<b>repository/</b>
+│       ├──<b>service/</b>
+│       ├──<b>states/</b>
+│       └──<b>utils/</b>
+│           ├──<b>themes/</b>
+│           └──<b>widgets/</b>
+</pre>
+- **app/**: Inside the app folder are the Views and Controllers of the application screens, responsible for displaying the UI and the information displayed on it
+- **shared/**: Inside the Shared folder are the shared attributes used throughout the application
+- **models/**: Following the MVC format, inside the Models folder are the objects used in the app
+- **repository/**: Following the Repository standard, this folder contains the repositories responsible for connecting to the API
+- **service/**: Following the service pattern as a whole, this folder contains the logic of the external UI control services, such as converting the elements obtained from the API into a tree structure.
+- **state/**: Inside the states folder, we have the classes that determine the state of the application, such as Complete, Loading and Failure.
+- **utils/**: In the utils folder we have the useful files for building the UI
+- **themes/**: In the themes folder we have the file containing the theme generated for the app
+- **widgets/**:  In this folder we have the Widgets created externally to optimize the app's code and performance
 
-- **app/asset**: 
-- **app/home**:
+
+
 
 ## Video Preview:
 https://github.com/user-attachments/assets/0eff441a-e70c-486f-9fa3-23b0b17d48f8
