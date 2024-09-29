@@ -7,6 +7,7 @@ import 'package:challenge_tractian_app/shared/service/search_node_service.dart';
 import 'package:challenge_tractian_app/shared/service/tree_build_service.dart';
 import 'package:challenge_tractian_app/shared/states/states.dart';
 import 'package:flutter/material.dart';
+import 'package:result_dart/result_dart.dart';
 
 class AssetController extends ChangeNotifier {
   final HttpApiRepository repository;
@@ -25,14 +26,14 @@ class AssetController extends ChangeNotifier {
 
   Map<NodeModel, int> mapNodes = {};
   NodeModel? searchNode;
-  StateModel _stateBuildTree = Loading();
+  StateModel _state = Loading();
 
   bool showFab = false;
   bool critic = false;
   bool operating = false;
 
   fetchAll(CompanyModel companyModel) async {
-    setBuildTreeState(Loading());
+    setState(Loading());
     disposeAll();
     await _fetchAssetsAndLocations(companyModel.id);
     root = treeBuildService.buildTree(companyModel.name, locations, assets);
@@ -41,45 +42,53 @@ class AssetController extends ChangeNotifier {
   }
 
   fetchSearch(String stringSearch) async {
-    setBuildTreeState(Loading());
+    setState(Loading());
     try {
       searchNode =
           searchNodeService.searchAndBuildTree(root, stringSearch, 0.2);
       _updateTree(searchNode!);
-      setBuildTreeState(Complete());
+      setState(Complete());
     } catch (e) {
-      setBuildTreeState(Error(error: "$e"));
+      setState(Error(error: "$e"));
     }
     notifyListeners();
   }
 
   fetchFilter(String filterTerm) async {
-    setBuildTreeState(Loading());
+    setState(Loading());
     try {
       searchNode = searchNodeService.filterAndBuildTree(root, filterTerm);
       _updateTree(searchNode!);
-      setBuildTreeState(Complete());
+      setState(Complete());
     } catch (e) {
-      setBuildTreeState(Error(error: "$e"));
+      setState(Error(error: "$e"));
     }
   }
 
   Future<void> _fetchAssetsAndLocations(String companyId) async {
-    final resultLocations = await repository.getLocations(companyId);
-    final resultAssets = await repository.getAssets(companyId);
-    resultLocations.fold((success) {
-      locations = success;
-      setBuildTreeState(Complete());
-    }, (failure) {
-      setBuildTreeState(failure);
-    });
-    resultAssets.fold((success) {
-      assets = success;
-      setBuildTreeState(Complete());
-    }, (failure) {
-      setBuildTreeState(failure);
-    });
-    notifyListeners();
+    final results = await Future.wait([
+      repository.getLocations(companyId),
+      repository.getAssets(companyId),
+    ]);
+    final resultLocations =
+        results[0] as Result<List<LocationModel>, StateModel>;
+    final resultAssets = results[1] as Result<List<AssetModel>, StateModel>;
+
+    void handleResult<NodeModel>(Result<List<NodeModel>, StateModel> result,
+        Function(List<NodeModel>) onSuccess) {
+      result.onSuccess((data) {
+        onSuccess(data);
+      }).onFailure((data) {
+        setState(data);
+      });
+    }
+
+    handleResult(resultLocations, (data) => locations = data);
+    handleResult(resultAssets, (data) => assets = data);
+
+    if (resultLocations.isSuccess() && resultAssets.isSuccess()) {
+      setState(Complete());
+    }
   }
 
   void _updateTree(NodeModel node) {
@@ -116,13 +125,13 @@ class AssetController extends ChangeNotifier {
   }
 
   void disposeSearch() {
-    setBuildTreeState(Loading());
+    setState(Loading());
     critic = false;
     operating = false;
     mapNodes.clear();
     searchNode = null;
     _updateTree(root);
-    setBuildTreeState(Complete());
+    setState(Complete());
   }
 
   setShowFab(bool set) {
@@ -156,10 +165,10 @@ class AssetController extends ChangeNotifier {
     }
   }
 
-  getBuildTreeState() => _stateBuildTree;
+  getState() => _state;
 
-  setBuildTreeState(StateModel newState) {
-    _stateBuildTree = newState;
+  setState(StateModel newState) {
+    _state = newState;
     notifyListeners();
   }
 }

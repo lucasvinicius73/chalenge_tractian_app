@@ -35,7 +35,7 @@ class _AssetViewState extends State<AssetView> {
     return ListenableBuilder(
       listenable: controller,
       builder: (context, child) {
-        final StateModel state = controller.getBuildTreeState();
+        final StateModel state = controller.getState();
         Widget widgetList = Container();
         switch (state) {
           case Loading _:
@@ -56,7 +56,7 @@ class _AssetViewState extends State<AssetView> {
                 onPressed: () {
                   _scrollController.animateTo(
                     0.0,
-                    duration: const Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeOut,
                   );
                 },
