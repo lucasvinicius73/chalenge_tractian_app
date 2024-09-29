@@ -31,9 +31,9 @@ Challenge proposed by Tractian for the position of Mobile Software Engineer. The
 
 #### Design Patterns:
 The design patterns chosen to build this app were:
-**MVC:** Structuring the project with the Model, View and Controllers entities. Used to separate the logical functions from the UI
-**Repository:** Used to separate the app's communication function with the external API layer
-**Service:** It was used to organize the application's business logic, encapsulating specific and complex operations that shouldn't be directly in the models or controllers 
+- **MVC:** Structuring the project with the Model, View and Controllers entities. Used to separate the logical functions from the UI
+- **Repository:** Used to separate the app's communication function with the external API layer
+- **Service:** It was used to organize the application's business logic, encapsulating specific and complex operations that shouldn't be directly in the models or controllers 
 
 #### Folder Structure:
 <pre>
